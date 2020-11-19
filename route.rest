@@ -1,0 +1,35 @@
+GET http://localhost:3003/api/subscribers
+
+###
+
+POST http://localhost:3003/api/subscribers
+Content-Type: application/json
+
+{
+    "name": "Test",
+    "subscribedToChannel": "Kiran Ojha"
+    
+}
+
+###
+DELETE http://localhost:3003/api/subscribers
+
+
+
+###
+GET http://localhost:3003/api/subscribers/5fb4f1ecf1acfd2dcc3d53e3
+
+
+###
+PATCH http://localhost:3003/api/subscribers/5fb4f2eda38d563420989437
+Content-Type: application/json
+
+{
+    "name": "Kiran Ojha",
+    "subscribedToChannel": "Kamal Ojha"
+    
+}
+
+
+###
+DELETE http://localhost:3003/api/subscribers/5fb4e170252f57335c6eeb67
