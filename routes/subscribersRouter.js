@@ -4,11 +4,39 @@ const Subscriber = require("../models/Subscriber");
 
 //Get all
 router
+  .route("/all")
+  .get(async (req, res, next) => {
+    try {
+      const subscribers = await Subscriber.find();
+      // res.json((subscribers) => subscribers.name == req.user.name);
+      res.json(subscribers);
+    } catch (err) {
+      err.status = 500;
+      return next(err);
+    }
+  })
+  .delete(async (req, res, next) => {
+    try {
+      const deleteSubscriber = await Subscriber.deleteMany();
+
+      res.status(200).json({
+        status: "Success",
+        message: `Succesfully deleted ${deleteSubscriber.deletedCount} files `,
+      });
+    } catch (err) {
+      err.status = 400;
+      return next(err);
+    }
+  });
+
+//Get own
+router
   .route("/")
 
   .get(async (req, res, next) => {
     try {
-      const subscribers = await Subscriber.find();
+      const subscribers = await Subscriber.find({ name: req.user.name });
+      // res.json((subscribers) => subscribers.name == req.user.name);
       res.json(subscribers);
     } catch (err) {
       err.status = 500;
@@ -34,7 +62,9 @@ router
 
   .delete(async (req, res, next) => {
     try {
-      const deleteSubscriber = await Subscriber.deleteMany();
+      const deleteSubscriber = await Subscriber.deleteMany({
+        name: req.user.name,
+      });
 
       res.status(200).json({
         status: "Success",

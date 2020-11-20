@@ -46,6 +46,6 @@ app.use((err, req, res, next) => {
 });
 
 //Start the server
-app.listen(process.env.Port, () => {
-  console.log(`Server is running at localhost: ${process.env.Port}`);
+app.listen(process.env.Auth_Port, () => {
+  console.log(`Server is running at localhost: ${process.env.Auth_Port}`);
 });
