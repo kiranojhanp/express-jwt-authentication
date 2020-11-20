@@ -6,7 +6,36 @@ const User = require("../models/User");
 
 const router = express.Router();
 
-// const users = [];
+let refreshTokens = [];
+
+router.route("/logout").delete((req, res, next) => {
+  refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
+  res.sendStatus(204);
+});
+
+router.route("/token").post((req, res, next) => {
+  const refreshToken = req.body.token;
+  if (refreshToken == null) {
+    let err = new Error("No refresh token");
+    err.status = 401;
+    return next(err);
+  }
+  if (!refreshTokens.includes(refreshToken)) {
+    let err = new Error("Refresh token not found in database");
+    err.status = 403;
+    return next(err);
+  }
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, payload) => {
+    if (err) {
+      let err = new Error("Refresh token not cannot be verified");
+      err.status = 403;
+      return next(err);
+    }
+    const accessToken = generateAccessToken({ name: payload.name });
+    res.json({ accessToken: accessToken });
+    console.log(refreshTokens);
+  });
+});
 
 router
   .route("/register")
@@ -41,22 +70,31 @@ router
   .get((req, res) => {
     res.json("Logged in");
   })
-  .post(async (req, res) => {
+  .post((req, res) => {
     try {
       const { name, password } = req.body;
       const payload = {
         name: name,
       };
 
-      const accessToken = jwt.sign(payload, process.env.SECRET);
-      res
-        .status(200)
-        .json({ message: "Login Successful", accessToken: accessToken });
+      const accessToken = generateAccessToken(payload);
+      const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET);
+      refreshTokens.push(refreshToken);
+
+      res.status(200).json({
+        message: "Login Successful",
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      });
 
       // res.send("success");
     } catch (error) {
       res.status(500).send(error);
     }
   });
+
+function generateAccessToken(payload) {
+  return jwt.sign(payload, process.env.SECRET, { expiresIn: "15s" });
+}
 
 module.exports = router;

@@ -1,7 +1,5 @@
 require("dotenv").config();
 
-const authenticateToken = require("./middlewares/auth");
-
 const express = require("express");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
@@ -21,16 +19,13 @@ db.once("open", () => console.log(`Database attached`));
 app.use(helmet({ contentSecurityPolicy: false }));
 //Express setup
 app.use(express.json());
-// app.disable("x-powered-by");
 
-const subscribersRouter = require("./routes/subscribersRouter");
 const usersRouter = require("./routes/usersRouter");
 
-app.use("/api/subscribers", authenticateToken, subscribersRouter);
 app.use("/api/users", usersRouter);
 
 // error handling
-app.use((req, res, next) => {
+app.post((req, res, next) => {
   let err = new Error("API not found!");
   err.status = 404;
   next(err);

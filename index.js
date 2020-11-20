@@ -24,10 +24,8 @@ app.use(express.json());
 // app.disable("x-powered-by");
 
 const subscribersRouter = require("./routes/subscribersRouter");
-const usersRouter = require("./routes/usersRouter");
 
 app.use("/api/subscribers", authenticateToken, subscribersRouter);
-app.use("/api/users", usersRouter);
 
 // error handling
 app.use((req, res, next) => {

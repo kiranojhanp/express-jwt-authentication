@@ -12,9 +12,7 @@ function authenticateToken(req, res, next) {
 
   jwt.verify(token, process.env.SECRET, (err, payload) => {
     if (err) {
-      let err = new Error(
-        "Token couldn't be verified. Please reenter the login information."
-      );
+      let err = new Error("Token couldn't be verified.");
       err.status = 403;
       return next(err);
     }

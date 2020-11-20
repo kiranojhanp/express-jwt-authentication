@@ -1,11 +1,11 @@
 GET http://localhost:3003/api/subscribers
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS2lyYW4gT2poYSIsImlhdCI6MTYwNTg1MTgwOX0.1IXZM6lfULvF2Idk0ptaDj5WcEydT6tYBZ-5rfi8xAI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS2FtYWwgT2poYSIsImlhdCI6MTYwNTg1ODkyNSwiZXhwIjoxNjA1ODU4OTg1fQ.R68xvCALL1e2jEQTqw8phq1di8DuYmNW5_XBbG-b8sM
 
 
 ###
 
 POST http://localhost:3003/api/subscribers
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS2FtYWwgT2poYSIsImlhdCI6MTYwNTg1MTg4MX0.GIgqgpW7nvJkPL_pSZhQWI32VdZBeAJqDOwFDuEeUsw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS2FtYWwgT2poYSIsImlhdCI6MTYwNTg1ODkyNSwiZXhwIjoxNjA1ODU4OTg1fQ.R68xvCALL1e2jEQTqw8phq1di8DuYmNW5_XBbG-b8sM
 Content-Type: application/json
 
 {
@@ -29,7 +29,7 @@ PATCH http://localhost:3003/api/subscribers/5fb4f2eda38d563420989437
 Content-Type: application/json
 
 {
-    "name": "Kiran Ojha",
+    "name": "Kamal Ojha",
     "subscribedToChannel": "Kamal Ojha"
     
 }
@@ -59,10 +59,19 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3004/api/users/login
+POST http://localhost:4000/api/users/login
 Content-Type: application/json
 
 {
     "name": "Kamal Ojha",
     "password": "password"
+}
+
+###
+
+POST http://localhost:4000/api/users/token
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS2FtYWwgT2poYSIsImlhdCI6MTYwNTg2NjU0M30.Eal8VZ34Afrar8ZGmNCnC4rx1QnVcpf5JGSKkzqI2tA"
 }
